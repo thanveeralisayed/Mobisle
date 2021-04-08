@@ -1,0 +1,233 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Buy Now{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+    <div class="row">
+
+
+        
+        {% if searcheditems %}
+            <div class="col-sm-1">
+                 
+    
+
+        {% else %}    
+        <div class="col-sm-3">
+
+            {% endif %}    
+
+            
+            {% if br == 'android' %}
+
+            <h4 class="text-secondary">Brands</h4>
+            
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action" href="{% url 'aphones' %}">All Mobiles</a>
+            </div>
+
+            
+     
+            {% for name in brands %}
+                
+
+            <a class="list-group-item list-group-item-action" href="{% url 'aphonesdata' name %}">{{name}}</a>
+            
+
+
+            {% endfor %}
+
+            <h4 class="text-secondary">Ram</h4>
+
+            {% for size in memory %}
+                
+
+            <a class="list-group-item list-group-item-action" href="{% url 'aphonesdata' size %}">{{size}}GB</a>
+            
+
+
+            {% endfor %}
+
+
+            <h4 class="text-secondary">Internal Memory</h4>
+
+            {% for tot in internal %}
+                
+
+            <a class="list-group-item list-group-item-action" href="{% url 'aphonesdata' tot %}">{{tot}}GB</a>
+            
+
+
+            {% endfor %}
+
+
+            <h4 class="text-secondary">Price</h4>
+
+           
+                
+
+            <a class="list-group-item list-group-item-action" href="{% url 'aphonesdata' 'Above' %}">Above 10000</a>
+            <a class="list-group-item list-group-item-action" href="{% url 'aphonesdata' 'Below' %}">Below 10000</a>
+
+            
+
+
+                
+            {% endif %}
+
+
+
+            
+            {% if br == 'iphone' %}
+
+            
+                
+            <h4 class="text-secondary">Internal Memory</h4>
+
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action" href="{% url 'iphones' %}">All</a>
+            </div>
+
+            {% for tot in internal %}
+                
+
+            <a class="list-group-item list-group-item-action" href="{% url 'iphonesdata' tot %}">{{tot}}GB</a>
+            
+
+
+            {% endfor %}
+
+
+            {% endif %}
+                
+
+            
+            {% if br == 'qphone' %}
+                
+            <h4 class="text-secondary">Brands</h4>
+            
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action" href="{% url 'qphones' %}">All Mobiles</a>
+            </div>
+
+            
+     
+            {% for name in brands %}
+                
+
+            <a class="list-group-item list-group-item-action" href="{% url 'qphonesdata' name %}">{{name}}</a>
+            
+
+
+            {% endfor %}
+
+            {% endif %}
+
+
+            
+            {% if br == 'kphone' %}
+                
+            <h4 class="text-secondary">Brands</h4>
+            
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action" href="{% url 'kphones' %}">All Mobiles</a>
+            </div>
+
+            
+     
+            {% for name in brands %}
+                
+
+            <a class="list-group-item list-group-item-action" href="{% url 'kphonesdata' name %}">{{name}}</a>
+            
+
+
+            {% endfor %}
+
+
+            {% endif %}
+                
+                
+
+                          
+                
+
+        </div>
+
+    <div class="col-sm-8 offset-sm-1">
+
+
+
+
+
+        
+        
+            
+        <div class="row">
+            
+            
+            {% for item in mobiles %}
+
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" height="150px" src="{{item.product_img.url}}" alt="" >
+
+                    <div class="card-body">
+                        <a class="card-title" href="{% url 'product-detail' item.id %}">{{item.title}}</a>
+                        <p class="card-text">{{item.d_price}}</p>
+                    </div>
+
+                </div>
+            </div>
+
+                
+            {% endfor %}
+
+
+        </div>
+
+
+       
+
+
+        
+        
+
+
+        <div class="row">
+            
+            
+            {% for item in searcheditems %}
+
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" height="150px" src="{{item.product_img.url}}" alt="" >
+
+                    <div class="card-body">
+                        <a class="card-title" href="{% url 'product-detail' item.id %}">{{item.title}}</a>
+                        <p class="card-text">{{item.d_price}}</p>
+                    </div>
+
+                </div>
+            </div>
+
+                
+            {% endfor %}
+
+
+        </div>
+
+
+        
+            
+        
+            
+
+
+        
+    </div>    
+</div>
+
+  
+
+{% endblock main-content %}

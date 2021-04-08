@@ -1,0 +1,138 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Customer Registration{% endblock title %}
+{% block main-content %}
+<div class="container">
+ <div class="row my-3">
+  <div class="col-sm-6 offset-sm-3">
+
+   
+   {% if reg == 'yes' %}
+
+   <h3>Customer Registration</h3>
+   <hr>
+
+   <form action="" method="post" novalidate class="shadow p-5">
+
+      
+      {% if messages %}
+         
+         {% for message in messages %}
+            
+         <p 
+         
+         {% if message.tags %}
+            class = "alert alert-{{message.tags}} mb-5"
+         {% endif %}>
+         {{message}}
+         </p>
+
+         {% endfor %}
+               
+
+      {% endif %}
+         
+
+      {% csrf_token %}
+    
+   
+   {% for fm in form %}
+      
+      <div class="form-group mb-3">
+         {{fm.label_tag}} {{fm}} <small class="text-danger">
+            {{fm.errors|striptags}}
+         </small>
+      </div>
+
+   {% endfor %}
+
+   <input type="submit" value="Submit" class="btn-primary">
+      
+   <br>
+
+   <div class="text-center text-primary fw-bold">
+      <small>
+         Already have an account? <a class="text-danger"  href="{% url 'login' %}">Login</a>
+      </small>
+   </div>
+
+   
+
+
+   {% if form.non_field_errors %}
+      
+      {% for error in form.non_field_errors %}
+      <p class="alert alert-danger my-3">{{error}}</p>
+      {% endfor %}
+         
+   {% endif %}
+      
+
+   
+   </form>
+
+      
+   {% endif %}
+
+
+   
+   {% if reg != 'yes' %}
+      
+   <h3>Login</h3>
+   <hr>
+   <form action="" method="post" novalidate class="shadow p-5">
+    {% csrf_token %}
+
+    
+    {% for nm in form %}
+       
+      <div class="form-group">
+
+         {{nm.label_tag}}{{nm}} 
+         
+         <small class="text-danger"> {{nm.errors|striptags}}</small>
+
+      </div>
+
+
+    {% endfor %}
+
+    <small><a href="{% url 'password-reset' %}">Forgot Password</a></small> <br> <br>
+       
+
+    <input type="submit" value="Submit" class="btn-primary">
+      
+    <br>
+ 
+    <div class="text-center text-primary fw-bold">
+       <small>
+          Not Registered? <a class="text-danger"  href="{% url 'registration' %}">Register</a>
+       </small>
+    </div>
+
+
+    {% if form.non_field_errors %}
+      
+      {% for error in form.non_field_errors %}
+      <p class="alert alert-danger my-3">{{error}}</p>
+      {% endfor %}
+         
+   {% endif %}
+
+
+   </form>
+
+
+   {% endif %}
+      
+      
+
+  
+
+
+
+
+  </div>
+ </div>
+</div>
+{% endblock main-content %}

@@ -1,0 +1,140 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+  <h3>Welcome {{request.user}}</h3>
+  <div class="col-sm-2 border-end">
+   <ul class="list-unstyled">
+
+    
+    
+    {% if request.path == '/profile/' %}
+      <li class="d-grid"><a href="{% url 'profile' %}" class="btn {{active}}">Profile</a></li>
+      <li class="d-grid"><a href="{% url 'address' %}" class="btn">Address</a></li>
+    {% endif %}
+
+    
+    {% if request.path == '/address/' %}
+      <li class="d-grid"><a href="{% url 'profile' %}" class="btn">Profile</a></li>
+      <li class="d-grid"><a href="{% url 'address' %}" class="btn {{active}}">Address</a></li>
+    {% endif %}
+      
+      
+    
+
+
+
+   </ul>
+  </div>
+  <div class="col-sm-9 offset-sm-1">
+
+    
+    {% if request.path == '/profile/' %}
+      
+    
+      
+
+   <form action="" method="post">
+    {% csrf_token %}
+
+    
+    {% for fm in form %}
+      <div class="form-group col-lg-6 mb-3">
+        {{fm.label_tag}} {{fm}} 
+        <small class="text-danger">
+          {{fm.errors|striptags}}
+      </small>
+      </div>
+    {% endfor %}
+    <div class="col-12 mt-3">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+    {% if form.non_field_errors %}
+                        
+    {% for error in form.non_field_errors %}
+    <p class="alert alert-danger my-3">{{error}}</p>
+    {% endfor %}
+    {% endif %}
+
+
+   </form>
+
+   
+   {% if messages %}
+      
+      {% for message in messages %}
+         <p 
+         {% if messages.tags %}
+           class="alert alert-{{message.tags}} mb-5"
+         {% endif %}>{{message}}</p>
+      {% endfor %}
+        
+   {% endif %}
+
+
+   {% endif %}
+
+
+
+   {% if request.path == '/address/' %}
+
+   <div class="row">
+
+    
+    {% for ad in address %}
+      
+    <div class="col-sm-6">
+     <div class="card">
+      <div class="card-body">
+
+        <div class="card-title">
+          
+          
+          {% if ad.adefault == 'Yes' %}
+            
+          Default Address
+
+          {% endif %}
+            
+
+        </div>
+
+
+    <h3>Address {{forloop.counter}}</h3>
+    <p>Name     - {{ad.name}}</p>   
+    <p>Landmark - {{ad.landmark}}</p> 
+    <p>Place    - {{ad.place}}</p>   
+    <p>Zip      - {{ad.zipcode}}</p>   
+    <p>State    - {{ad.state}}</p>   
+
+    
+    {% if ad.adefault == 'No' %}
+      <a href="{% url 'adefault' ad.id %}" class="btn btn-success">Set As Default</a>
+    {% endif %}
+      
+    
+    <a class="btn btn-danger" href="{% url 'adelete' ad.id %}">Delete</a>
+
+    
+      
+       
+      </div>
+     </div>
+    </div>
+
+    {% endfor %}
+  
+   </div>
+
+
+  {% endif %}
+
+
+
+  </div>
+ </div>
+</div>
+{% endblock main-content %}

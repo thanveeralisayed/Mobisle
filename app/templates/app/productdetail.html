@@ -1,0 +1,38 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Product Detail{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+
+
+ <div class="row">
+  <div class="col-sm-6 text-center align-self-center">
+   <img src="{{ prod.product_img.url }}" style="height: 500px;width: 500;" alt="" class="img-thumbnail">
+  </div>
+  <div class="col-sm-5 offset-sm-1">
+   <h2>{{prod.title}}</h2>
+   <!-- <h5>from {{prod.brand}}</h5> -->
+
+   <hr>
+   <p></p> <br>
+   <h4>Rs.{{prod.s_price}}  <small class="fw-light text-decoration-line-through"> {{prod.d_price}} </small></h4> <br>
+   <a href="{% url 'add-to-cart' %}" class="btn btn-primary shadow px-5 py-2">Add to Cart</a>
+   <a href="{% url 'buy-now' %}" class="btn btn-danger shadow px-5 py-2 ms-4">Buy Now</a>
+   <h5 class="mt-5">Specifications</h5>
+   <ul>
+    <li>{{prod.soc}} Processor</li>
+    <li>{{prod.ram}}GB RAM</li>
+    <li>{{prod.connectivity}} Conenctivity</li>
+    <li>{{prod.battery}} Battery</li>
+    <li>{{prod.screen}} Screen</li>
+    <li>{{prod.resolution}} Resolution</li>
+    <li>{{prod.screen}} Screen</li>
+    <li>{{prod.camera}} Camera</li>
+    <li>{{prod.rom}}GB Internal memory</li>
+    <li>{{prod.osystem}} System</li>
+
+   </ul>
+  </div>
+ </div>
+</div>
+{% endblock main-content %}
