@@ -78,9 +78,23 @@
           </li>
 
 
+
+          
+          {% if num != 0 %}
           <li class="nav-item mx-2">
-           <a href="{% url 'add-to-cart' %}" class="nav-link text-white"><span class="badge bg-primary text-warning">4</span> Cart </a>
-          </li>
+            <a href="{% url 'showcart' %}" class="nav-link text-white"><span class="badge bg-primary text-warning">{{num}}</span> Cart </a>
+           </li>
+          {% endif %}
+
+          
+          {% if num == 0 %}
+          <li class="nav-item mx-2">
+            <a href="#" class="nav-link text-white"><span class="badge bg-primary text-warning">{{num}}</span> Cart </a>
+           </li>
+          {% endif %}
+            
+            
+          
 
 
             {% else %}

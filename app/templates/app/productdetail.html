@@ -16,8 +16,36 @@
    <hr>
    <p></p> <br>
    <h4>Rs.{{prod.s_price}}  <small class="fw-light text-decoration-line-through"> {{prod.d_price}} </small></h4> <br>
-   <a href="{% url 'add-to-cart' %}" class="btn btn-primary shadow px-5 py-2">Add to Cart</a>
-   <a href="{% url 'buy-now' %}" class="btn btn-danger shadow px-5 py-2 ms-4">Buy Now</a>
+
+
+   
+   {% if present == '' %}
+       
+   
+       
+    <form action="/add-to-cart" class="d-inline">
+        <input type="hidden" name="prod_id" value="{{prod.id}}" id="prod_id">
+
+       <button type="submit" class="btn btn-primary shadow px-5 py-2 mt-2">Add to cart</button>
+    
+    </form>
+
+    {% endif %}
+
+    
+    {% if present == 'Yes' %}
+    <a class="btn btn-secondary shadow px-5 py-2 mt-2">Added to Cart</a>
+    {% endif %}
+        
+
+
+
+   
+   <a href="{% url 'buy-now' %}" class="btn btn-danger shadow px-5 py-2 mt-2">Buy Now</a>
+
+
+   
+
    <h5 class="mt-5">Specifications</h5>
    <ul>
     <li>{{prod.soc}} Processor</li>

@@ -14,7 +14,9 @@ class ProductView(View):
         iphones = Product.objects.filter(category='i')
         qwerty = Product.objects.filter(category='q')
         keypad = Product.objects.filter(category='k')
-        return render(request, 'app/home.html',{'android':android,'iphones':iphones,'qwerty':qwerty,'keypad':keypad})
+        cart = Cart.objects.filter(user=request.user)
+        num = cart.count()
+        return render(request, 'app/home.html',{'android':android,'iphones':iphones,'qwerty':qwerty,'keypad':keypad,'num':num})
 
        
 
@@ -23,7 +25,9 @@ def SearchItem(request):
     item_name = request.GET.get('item_name')
     item = Product.objects.filter(title__icontains=item_name)
     itemser = item_name
-    return render(request,'app/aphones.html',{'searcheditems':item,'itemser':itemser})    
+    cart = Cart.objects.filter(user=user)
+    num = cart.count()
+    return render(request,'app/aphones.html',{'searcheditems':item,'itemser':itemser,'num':num})    
 
     
 
@@ -38,14 +42,64 @@ def SearchItem(request):
 
 class ProductDetailView(View):
     def get(self,request,pk):
+        user = request.user
         prod = Product.objects.get(id=pk)
+        cart = Cart.objects.filter(user=user)
+        present = ''
+        num = cart.count()
 
-        return render(request, 'app/productdetail.html',{'prod':prod})
+        for item in cart:
+            print(item.product.id)
+            if prod.id == item.product.id:
+                present = 'Yes'
+                print(present)
+                if present == 'Yes':
+                    break
+            else:
+                present = 'No'
+                print(present)
+
+        
+
+
+        return render(request, 'app/productdetail.html',{'prod':prod,'present':present,'num':num})
 
 
 
 def add_to_cart(request):
- return render(request, 'app/addtocart.html')
+    user = request.user
+    product_id = request.GET.get('prod_id')
+    productitem = Product.objects.get(id=product_id)
+    Cart(user=user, product=productitem).save()
+
+    return redirect('/cart')
+
+def removefromcart(request):
+    itemid = request.GET.get('rem_item')
+    print(itemid)
+    item = Cart.objects.get(id=itemid)
+    Cart.delete(item)
+    return redirect('showcart')
+
+
+
+def show_cart(request):
+    if request.user.is_authenticated:
+        user = request.user
+        cart = Cart.objects.filter(user=user)
+        num = cart.count()
+
+        amount = 0.0
+        shipping_amt = 70.0
+
+        for item in cart:
+            amount = amount + item.product.d_price
+
+        total = amount + shipping_amt
+
+
+        return render(request, 'app/addtocart.html',{'carts':cart,'num':num,'amount':amount,'total':total})
+
 
 def buy_now(request):
  return render(request, 'app/buynow.html')
@@ -65,6 +119,10 @@ def change_password(request):
 
 
 def aphones(request, data=None):
+
+    user = request.user
+    cart = Cart.objects.filter(user=user)
+    num = cart.count()
 
     br = 'android'
     brands = Product.objects.values_list('brand', flat=True).filter(category='a').distinct()
@@ -90,7 +148,7 @@ def aphones(request, data=None):
         mobiles = Product.objects.filter(category='a').filter(d_price__gt=9999)    
           
 
-    return render(request, 'app/aphones.html',{'mobiles':mobiles , 'brands':brands, 'memory':memory, 'internal':internal, 'br':br})
+    return render(request, 'app/aphones.html',{'mobiles':mobiles , 'brands':brands, 'memory':memory, 'internal':internal, 'br':br,'num':num})
 
 
 
