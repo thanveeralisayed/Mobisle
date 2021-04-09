@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Product Detail{% endblock title %}
 {% block main-content %}
-<div class="container my-5">
+<div class="detail container my-5">
 
 
  <div class="row">
@@ -17,15 +17,15 @@
    <p></p> <br>
    <h4>Rs.{{prod.s_price}}  <small class="fw-light text-decoration-line-through"> {{prod.d_price}} </small></h4> <br>
 
-
+   <input type="hidden" pid="n" name="prod_id" value="{{prod.id}}" id="prod_id">
    
    {% if present == '' %}
        
    {% if request.user.is_authenticated %}
     
-        <input type="hidden" name="prod_id" value="{{prod.id}}" id="prod_id">
+        
 
-       <button type="submit" pid="{{prod.id}}" id="addtocartbtn" class="btn btn-primary shadow px-5 py-2 mt-2">Add to cart</button>
+       <button type="submit" qid="n" pid="{{prod.id}}" id="addtocartbtn" class="btn btn-primary shadow px-5 py-2 mt-2">Add to cart</button>
     
     
     
@@ -35,7 +35,7 @@
 
     
     {% if present == 'Yes' %}
-    <a class="btn btn-secondary shadow px-5 py-2 mt-2">Added to Cart</a>
+    <a id="addtocartbtn" qid="y" class="btn btn-secondary shadow px-5 py-2 mt-2">Added to Cart</a>
     {% endif %}
         
 

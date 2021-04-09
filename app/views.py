@@ -116,8 +116,7 @@ def addedorno(request):
                         break
 
         print("works")
-
-        print(btnclass)           
+       
         data = {
             'classname':btnclass,
             'btnname':btnname,
