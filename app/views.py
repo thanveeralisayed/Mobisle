@@ -82,12 +82,51 @@ def add_to_cart(request):
         Cart(user=user,product=proditem).save()
         cart = Cart.objects.all().filter(user=request.user).count()
 
+
+
+
+
         data = {
-            'cartstatus':"added",
             'count':cart
         }
 
     return JsonResponse(data)
+
+
+def addedorno(request):
+    btnstatus = 'n'
+    btnclass = 'btn btn-primary shadow px-5 py-2 mt-2'
+    btnname = 'Add to Cart'
+    if request.method == "GET":
+        prod_id = request.GET['prod_id']
+        if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=request.user)
+            prod = Product.objects.get(id=prod_id)
+            present = ''
+            for item in cart:
+                print(item.product.id)
+                if prod.id == item.product.id:
+                    present = 'Yes'
+                    print(present)
+                    if present == 'Yes':
+                        btnclass = 'btn btn-secondary shadow px-5 py-2 mt-2'
+                        btnname = 'Added to Cart'
+                        btnstatus = 'y'
+                        print("w")
+                        break
+
+        print("works")
+
+        print(btnclass)           
+        data = {
+            'classname':btnclass,
+            'btnname':btnname,
+            'btnstatus':btnstatus
+        }   
+    return JsonResponse(data)                
+        
+
+
 
 
 

@@ -78,7 +78,9 @@ $('.minus-cart').click(function(){
 
 window.onload = function(){
     console.log("succesfully running")
-    var id = 
+    var btname = $("#addtocartbtn").innerText.toString()
+    
+    console.log(id)
 
     $.ajax({
         type:"GET",
@@ -91,19 +93,50 @@ window.onload = function(){
 
     })
 
+    
+    var id = $("#addtocartbtn").attr("pid").toString()
+
+    $.ajax({
+        
+        type:"GET",
+        url:"/ador",
+        data:{
+            prod_id:id
+        },
+
+        success:function(data){
+            console.log(data)
+            document.getElementById("addtocartbtn").className=data.classname
+            document.getElementById("addtocartbtn").innerText=data.btnname
+        }
+        
+    })
+
 }
 
 
 $("#addtocartbtn").click(function(){
     console.log("worked")
     var id = $(this).attr("pid").toString();
+    document.getElementById("addtocartbtn").className="btn btn-secondary shadow px-5 py-2 mt-2"
+    document.getElementById("addtocartbtn").innerText="Added to cart"
+
+
+    
 
     $.ajax({
         type:"GET",
         url:"/add-to-cart",
         data:{
             prod_id:id
+        },
+        success:function(data){
+            console.log(data)
+            document.getElementById("cartnum").innerText=data.count
         }
     })
+
+
+
 
 })
