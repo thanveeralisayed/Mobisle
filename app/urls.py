@@ -10,11 +10,14 @@ urlpatterns = [
     path('', views.ProductView.as_view(),name='home'),
     path('product-detail/<int:pk>/', views.ProductDetailView.as_view(), name='product-detail'),
     path('add-to-cart/', views.add_to_cart, name='add-to-cart'),
+
+    
     path('cart/',views.show_cart,name='showcart'),
     path('remove/',views.removefromcart,name='removecart'),
     
     path('pluscart/',views.plus_cart),
     path('minuscart/',views.minus_cart),
+    path('cup/',views.cartupdate),
 
 
     path('buy/', views.buy_now, name='buy-now'),

@@ -80,18 +80,14 @@
 
 
           
-          {% if num != 0 %}
+         
           <li class="nav-item mx-2">
-            <a href="{% url 'showcart' %}" class="nav-link text-white"><span class="badge bg-primary text-warning">{{num}}</span> Cart </a>
+            <a href="{% url 'showcart' %}" class="nav-link text-white"><span id="cartnum" class="badge bg-primary text-warning">{{num}}</span> Cart </a>
            </li>
-          {% endif %}
+        
 
           
-          {% if num == 0 %}
-          <li class="nav-item mx-2">
-            <a href="#" class="nav-link text-white"><span class="badge bg-primary text-warning">{{num}}</span> Cart </a>
-           </li>
-          {% endif %}
+          
             
             
           

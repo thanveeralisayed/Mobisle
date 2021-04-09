@@ -75,12 +75,21 @@ class ProductDetailView(View):
 
 
 def add_to_cart(request):
-    user = request.user
-    product_id = request.GET.get('prod_id')
-    productitem = Product.objects.get(id=product_id)
-    Cart(user=user, product=productitem).save()
+    if request.method == "GET":
+        prod_id = request.GET['prod_id']
+        user = request.user
+        proditem = Product.objects.get(id=prod_id)
+        Cart(user=user,product=proditem).save()
+        cart = Cart.objects.all().filter(user=request.user).count()
 
-    return redirect('/cart')
+        data = {
+            'cartstatus':"added",
+            'count':cart
+        }
+
+    return JsonResponse(data)
+
+
 
 def removefromcart(request):
     itemid = request.GET.get('rem_item')
@@ -116,6 +125,17 @@ def plus_cart(request):
 
     return JsonResponse(data)  
 
+
+def cartupdate(request):
+    if request.method == "GET":
+        cart = Cart.objects.all().filter(user=request.user).count()
+        print(cart)
+
+        data = {
+            'count':cart
+        }
+    return JsonResponse(data)        
+
           
 
 
@@ -125,7 +145,31 @@ def plus_cart(request):
 
 
 def minus_cart(request):
-    pass        
+    if request.method == 'GET':
+        prod_id = request.GET['prod_id']
+        print(prod_id)
+        cart = Cart.objects.filter(user=request.user)
+        c = Cart.objects.get(Q(product=prod_id) & Q(user=request.user))
+        c.quantity-=1
+        c.save()
+
+        amount = 0.0
+        shipping_amt = 70.0
+
+
+        for item in cart:
+            amount = amount + (item.product.d_price * item.quantity)
+
+        total = amount + shipping_amt
+
+        data = {
+            'quantity':c.quantity,
+            'amount':amount,
+            'totalamount':total
+        }
+
+    return JsonResponse(data)  
+      
 
 
 

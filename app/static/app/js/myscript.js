@@ -26,7 +26,7 @@ $('#slider1, #slider2, #slider3, #slider4' ).owlCarousel({
 $('.plus-cart').click(function(){
     var id = $(this).attr("pid").toString();
     console.log(id)
-    var eml = this.parentNode.children[2]
+    // var eml = this.parentNode.children[2]
 
 
     $.ajax({
@@ -37,11 +37,72 @@ $('.plus-cart').click(function(){
         },
 
         success:function(data){
-            eml.innerText = data.quantity
+            // eml.innerText = data.quantity
             document.getElementById("amount").innerText = data.amount
             document.getElementById("total").innerText = data.totalamount
+            document.getElementById("quantity").innerText = data.quantity
 
 
+        }
+    })
+
+})
+
+
+
+$('.minus-cart').click(function(){
+    var id = $(this).attr("pid").toString();
+    console.log(id)
+    // var eml = this.parentNode.children[2]
+
+
+    $.ajax({
+        type:"GET",
+        url:"/minuscart",
+        data:{
+            prod_id:id
+        },
+
+        success:function(data){
+            // eml.innerText = data.quantity
+            document.getElementById("amount").innerText = data.amount
+            document.getElementById("total").innerText = data.totalamount
+            document.getElementById("quantity").innerText = data.quantity
+
+
+        }
+    })
+
+})
+
+
+window.onload = function(){
+    console.log("succesfully running")
+    var id = 
+
+    $.ajax({
+        type:"GET",
+        url:"/cup",
+        success:function(data){
+            console.log(data)
+            document.getElementById("cartnum").innerText=data.count
+        }
+
+
+    })
+
+}
+
+
+$("#addtocartbtn").click(function(){
+    console.log("worked")
+    var id = $(this).attr("pid").toString();
+
+    $.ajax({
+        type:"GET",
+        url:"/add-to-cart",
+        data:{
+            prod_id:id
         }
     })
 
