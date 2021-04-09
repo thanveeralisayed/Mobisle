@@ -3,6 +3,8 @@ from django.views import View
 from .models import Customer,Product,Cart,Order
 from .forms import CustomerRegistrationForm,CustomerProfileForm
 from django.contrib import messages
+from django.db.models import Q
+from django.http import JsonResponse
 
 
 # def home(request):
@@ -62,7 +64,7 @@ class ProductDetailView(View):
                     if present == 'Yes':
                         break
                 else:
-                    present = 'No'
+                    present = ''
                     print(present)
 
         
@@ -88,6 +90,45 @@ def removefromcart(request):
     return redirect('showcart')
 
 
+def plus_cart(request):
+    if request.method == 'GET':
+        prod_id = request.GET['prod_id']
+        print(prod_id)
+        cart = Cart.objects.filter(user=request.user)
+        c = Cart.objects.get(Q(product=prod_id) & Q(user=request.user))
+        c.quantity+=1
+        c.save()
+
+        amount = 0.0
+        shipping_amt = 70.0
+
+
+        for item in cart:
+            amount = amount + (item.product.d_price * item.quantity)
+
+        total = amount + shipping_amt
+
+        data = {
+            'quantity':c.quantity,
+            'amount':amount,
+            'totalamount':total
+        }
+
+    return JsonResponse(data)  
+
+          
+
+
+
+
+
+
+
+def minus_cart(request):
+    pass        
+
+
+
 
 def show_cart(request):
     if request.user.is_authenticated:
@@ -99,7 +140,7 @@ def show_cart(request):
         shipping_amt = 70.0
 
         for item in cart:
-            amount = amount + item.product.d_price
+            amount = amount + (item.product.d_price * item.quantity)
 
         total = amount + shipping_amt
 

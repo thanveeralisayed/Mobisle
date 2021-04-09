@@ -19,16 +19,17 @@
 
 
    
-   {% if present == 'No' %}
+   {% if present == '' %}
        
-   
-       
+   {% if request.user.is_authenticated %}
     <form action="/add-to-cart" class="d-inline">
         <input type="hidden" name="prod_id" value="{{prod.id}}" id="prod_id">
 
        <button type="submit" class="btn btn-primary shadow px-5 py-2 mt-2">Add to cart</button>
     
     </form>
+    
+    {% endif %}
 
     {% endif %}
 
