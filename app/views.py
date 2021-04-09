@@ -10,23 +10,27 @@ from django.contrib import messages
 
 class ProductView(View):
     def get(self,request):
+        num = None
         android = Product.objects.filter(category='a')
         iphones = Product.objects.filter(category='i')
         qwerty = Product.objects.filter(category='q')
         keypad = Product.objects.filter(category='k')
-        cart = Cart.objects.filter(user=request.user)
-        num = cart.count()
+        if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=request.user)
+            num = cart.count()
         return render(request, 'app/home.html',{'android':android,'iphones':iphones,'qwerty':qwerty,'keypad':keypad,'num':num})
 
        
 
 
 def SearchItem(request):
+    num = None
     item_name = request.GET.get('item_name')
     item = Product.objects.filter(title__icontains=item_name)
     itemser = item_name
-    cart = Cart.objects.filter(user=user)
-    num = cart.count()
+    if request.user.is_authenticated:
+        cart = Cart.objects.filter(user=user)
+        num = cart.count()
     return render(request,'app/aphones.html',{'searcheditems':item,'itemser':itemser,'num':num})    
 
     
@@ -42,22 +46,24 @@ def SearchItem(request):
 
 class ProductDetailView(View):
     def get(self,request,pk):
+        num = None
+        present = ''
         user = request.user
         prod = Product.objects.get(id=pk)
-        cart = Cart.objects.filter(user=user)
-        present = ''
-        num = cart.count()
-
-        for item in cart:
-            print(item.product.id)
-            if prod.id == item.product.id:
-                present = 'Yes'
-                print(present)
-                if present == 'Yes':
-                    break
-            else:
-                present = 'No'
-                print(present)
+        if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=user)
+            num = cart.count()
+            present = ''
+            for item in cart:
+                print(item.product.id)
+                if prod.id == item.product.id:
+                    present = 'Yes'
+                    print(present)
+                    if present == 'Yes':
+                        break
+                else:
+                    present = 'No'
+                    print(present)
 
         
 
@@ -121,8 +127,10 @@ def change_password(request):
 def aphones(request, data=None):
 
     user = request.user
-    cart = Cart.objects.filter(user=user)
-    num = cart.count()
+    num = None
+    if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=user)
+            num = cart.count()
 
     br = 'android'
     brands = Product.objects.values_list('brand', flat=True).filter(category='a').distinct()
@@ -154,6 +162,12 @@ def aphones(request, data=None):
 
 def iphones(request, data=None):
 
+    user = request.user
+    num = None
+    if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=user)
+            num = cart.count()
+
     br = 'iphone'
     internal = Product.objects.values_list('rom', flat=True).filter(category='i').distinct
     if data == None:
@@ -163,11 +177,17 @@ def iphones(request, data=None):
          mobiles = Product.objects.filter(category='i').filter(rom=data)      
 
 
-    return render(request, 'app/aphones.html',{'mobiles':mobiles ,'internal':internal,'br':br})
+    return render(request, 'app/aphones.html',{'mobiles':mobiles ,'internal':internal,'br':br,'num':num})
 
 
 
 def qphones(request, data=None):
+    user = request.user
+    num = None
+    if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=user)
+            num = cart.count()
+
     br = 'qphone'
     brands = Product.objects.values_list('brand', flat=True).filter(category='q').distinct()
 
@@ -177,10 +197,16 @@ def qphones(request, data=None):
     elif data in brands:
         mobiles = Product.objects.filter(category='q').filter(brand=data)    
 
-    return render(request, 'app/aphones.html',{'mobiles':mobiles ,'brands':brands,'br':br})
+    return render(request, 'app/aphones.html',{'mobiles':mobiles ,'brands':brands,'br':br,'num':num})
 
 
 def kphones(request, data=None):
+    user = request.user
+    num = None
+    if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=user)
+            num = cart.count()
+
     br = 'kphone'
     brands = Product.objects.values_list('brand', flat=True).filter(category='k').distinct()
 
@@ -190,7 +216,7 @@ def kphones(request, data=None):
     elif data in brands:
         mobiles = Product.objects.filter(category='k').filter(brand=data)    
 
-    return render(request, 'app/aphones.html',{'mobiles':mobiles ,'brands':brands,'br':br})
+    return render(request, 'app/aphones.html',{'mobiles':mobiles ,'brands':brands,'br':br,'num':num})
 
 
 
@@ -229,8 +255,14 @@ def checkout(request):
 
 class ProfileView(View):
     def get(self, request):
+        user = request.user
+        num = None
+        if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=user)
+            num = cart.count()
+
         form = CustomerProfileForm()
-        return render(request,'app/profile.html',{'form':form,'active':'btn-primary'})
+        return render(request,'app/profile.html',{'form':form,'active':'btn-primary','num':num})
 
 
     def post(self, request):
@@ -249,9 +281,15 @@ class ProfileView(View):
 
 def AddressView(request,data=None):
 
+    user = request.user
+    num = None
+    if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=user)
+            num = cart.count()
+
     if data == None:
         addr = Customer.objects.filter(user=request.user)
-        return render(request,'app/profile.html',{'address':addr,'active':'btn-primary'})
+        return render(request,'app/profile.html',{'address':addr,'active':'btn-primary','num':num})
 
     else:
         data = int(data)
