@@ -23,6 +23,10 @@ $('#slider1, #slider2, #slider3, #slider4' ).owlCarousel({
 })
 
 
+
+
+
+
 $('.plus-cart').click(function(){
     var id = $(this).attr("pid").toString();
     console.log(id)
@@ -76,33 +80,18 @@ $('.minus-cart').click(function(){
 })
 
 
-window.onload = function(){
-    console.log("succesfully running")
-    
-    
-    console.log(id)
 
-    $.ajax({
-        type:"GET",
-        url:"/cup",
-        success:function(data){
-            console.log(data)
-            document.getElementById("cartnum").innerText=data.count
-        }
+localStorage.setItem("btnstatus","enabled");
 
 
-    })
+$("#addtocartbtn").click(function(){
 
-    
-    if($('div').is('.detail'))
-    {
-    
-    var qid = $("#addtocartbtn").attr("qid").toString()
-    console.log(id)
-    
-    
-    if(qid=='y')
-    {
+    console.log("worked")
+    stat = localStorage.btnstatus
+    console.log(stat)
+
+
+
     var id = $("#prod_id").attr("value").toString()
 
     $.ajax({
@@ -115,26 +104,20 @@ window.onload = function(){
 
         success:function(data){
             console.log(data)
-            document.getElementById("addtocartbtn").className=data.classname
-            document.getElementById("addtocartbtn").innerText=data.btnname
+            console.log("fucntion data works")
+            localStorage.btnstatus = data.lsstatus
             
             
         }
         
-    })}}
-
-}
-
-
-$("#addtocartbtn").click(function(){
-    console.log("worked")
-    
-    var intext= document.getElementById("addtocartbtn").innerHTML.toString()
+    })
 
     
-    if(intext == 'Add to cart')
-    {
+    
+    if(stat == "enabled")
+    { 
     var id = $(this).attr("pid").toString();
+
     $.ajax({
         type:"GET",
         url:"/add-to-cart",
@@ -145,7 +128,8 @@ $("#addtocartbtn").click(function(){
             console.log(data)
             document.getElementById("cartnum").innerText=data.count
             document.getElementById("addtocartbtn").innerText="Added to cart"
-            document.getElementById("addtocartbtn").className="btn btn-secondary shadow px-5 py-2 mt-2"
+            document.getElementById("addtocartbtn").className="btn btn-secondary shadow px-5 py-2 mt-2"   
+            localStorage.btnstatus = "disabled"   
             
         }
     })}
@@ -154,3 +138,17 @@ $("#addtocartbtn").click(function(){
 
 
 })
+
+
+
+
+
+
+$("#carmvebtn").click(function(){
+    console.log('working')
+    
+
+})
+
+
+

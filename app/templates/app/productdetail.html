@@ -64,4 +64,76 @@
   </div>
  </div>
 </div>
+
+
+{% if user.is_authenticated %}
+
+    <script type="text/javascript">
+
+window.onload = function(){
+
+    
+    
+
+    console.log("succesfully running")
+    
+    
+    console.log(id)
+
+    $.ajax({
+        type:"GET",
+        url:"/cup",
+        success:function(data){
+            console.log(data)
+            document.getElementById("cartnum").innerText=data.count
+        }
+
+
+    })
+
+    
+    
+    
+    var qid = $("#addtocartbtn").attr("qid").toString()
+    console.log(qid)
+
+    
+    
+   
+    var id = $("#prod_id").attr("value").toString()
+
+    $.ajax({
+        
+        type:"GET",
+        url:"/ador",
+        data:{
+            prod_id:id
+        },
+
+        success:function(data){
+            console.log(data)
+            document.getElementById("addtocartbtn").className=data.classname
+            document.getElementById("addtocartbtn").innerText=data.btnname
+            console.log("fucntion data works")
+
+            
+            
+        }
+        
+    })
+
+    
+
+
+
+}
+
+
+
+    </script>
+    
+{% endif %}
+    
+
+
 {% endblock main-content %}

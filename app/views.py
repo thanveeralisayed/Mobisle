@@ -95,6 +95,7 @@ def add_to_cart(request):
 
 def addedorno(request):
     btnstatus = 'n'
+    lsstorage = 'enabled'
     btnclass = 'btn btn-primary shadow px-5 py-2 mt-2'
     btnname = 'Add to Cart'
     if request.method == "GET":
@@ -112,6 +113,7 @@ def addedorno(request):
                         btnclass = 'btn btn-secondary shadow px-5 py-2 mt-2'
                         btnname = 'Added to Cart'
                         btnstatus = 'y'
+                        lsstorage = 'disabled'
                         print("w")
                         break
 
@@ -120,7 +122,8 @@ def addedorno(request):
         data = {
             'classname':btnclass,
             'btnname':btnname,
-            'btnstatus':btnstatus
+            'btnstatus':btnstatus,
+            'lsstatus':lsstorage
         }   
     return JsonResponse(data)                
         
