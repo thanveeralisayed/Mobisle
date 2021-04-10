@@ -13,8 +13,9 @@ urlpatterns = [
 
     
     path('cart/',views.show_cart,name='showcart'),
-    path('remove/',views.removefromcart,name='removecart'),
-    
+
+
+    path('remove/',views.removefromcart,name='rmcart'),
     path('pluscart/',views.plus_cart),
     path('minuscart/',views.minus_cart),
     path('cup/',views.cartupdate),

@@ -133,11 +133,39 @@ def addedorno(request):
 
 
 def removefromcart(request):
-    itemid = request.GET.get('rem_item')
-    print(itemid)
-    item = Cart.objects.get(id=itemid)
-    Cart.delete(item)
-    return redirect('showcart')
+    if request.method == "GET":
+        itemid = request.GET.get('prod_id')
+        print(itemid)
+        item = Cart.objects.get(id=itemid)
+        Cart.delete(item)
+        user = request.user
+        cart = Cart.objects.filter(user=user)
+        num = cart.count()
+
+        amount = 0.0
+        shipping_amt = 70.0
+
+
+        for item in cart:
+            amount = amount + (item.product.d_price * item.quantity)
+
+        total = amount + shipping_amt
+
+        data = {           
+            'amount':amount,
+            'totalamount':total,
+            'count':num
+        }
+
+    return JsonResponse(data)        
+
+
+
+    
+    
+
+    
+
 
 
 def plus_cart(request):

@@ -30,7 +30,7 @@ $('#slider1, #slider2, #slider3, #slider4' ).owlCarousel({
 $('.plus-cart').click(function(){
     var id = $(this).attr("pid").toString();
     console.log(id)
-    // var eml = this.parentNode.children[2]
+    var eml = this.parentNode.children[2]
 
 
     $.ajax({
@@ -41,10 +41,10 @@ $('.plus-cart').click(function(){
         },
 
         success:function(data){
-            // eml.innerText = data.quantity
-            document.getElementById("amount").innerText = data.amount
+            eml.innerText = data.quantity
+            document.getElementById("amount").innerText = "   " + data.amount
             document.getElementById("total").innerText = data.totalamount
-            document.getElementById("quantity").innerText = data.quantity
+            
 
 
         }
@@ -57,7 +57,7 @@ $('.plus-cart').click(function(){
 $('.minus-cart').click(function(){
     var id = $(this).attr("pid").toString();
     console.log(id)
-    // var eml = this.parentNode.children[2]
+    var eml = this.parentNode.children[2]
 
 
     $.ajax({
@@ -68,10 +68,10 @@ $('.minus-cart').click(function(){
         },
 
         success:function(data){
-            // eml.innerText = data.quantity
-            document.getElementById("amount").innerText = data.amount
-            document.getElementById("total").innerText = data.totalamount
-            document.getElementById("quantity").innerText = data.quantity
+            eml.innerText = data.quantity
+            document.getElementById("amount").innerText ="   " + data.amount
+            document.getElementById("total").innerText ="    " + data.totalamount
+            
 
 
         }
@@ -84,7 +84,7 @@ $('.minus-cart').click(function(){
 localStorage.setItem("btnstatus","enabled");
 
 
-$("#addtocartbtn").click(function(){
+$('.addcart').click(function(){
 
     console.log("worked")
     stat = localStorage.btnstatus
@@ -144,8 +144,38 @@ $("#addtocartbtn").click(function(){
 
 
 
-$("#carmvebtn").click(function(){
-    console.log('working')
+$('.rmcart').click(function(){
+
+    
+    console.log('working');
+    var id = $(this).attr("pid").toString();
+    var eml = this
+
+    
+    $.ajax({
+        type:"GET",
+        url:"/remove",
+        data:{
+            prod_id:id
+        },
+
+        success:function(data){
+            console.log(data)
+            document.getElementById("cartnum").innerText=data.count
+            document.getElementById("amount").innerText = "   " + data.amount
+            document.getElementById("total").innerText = data.totalamount
+            eml.parentNode.parentNode.parentNode.parentNode.remove()
+            
+        }
+
+
+    })
+
+    
+
+
+    
+
     
 
 })

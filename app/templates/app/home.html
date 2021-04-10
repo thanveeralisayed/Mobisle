@@ -53,7 +53,19 @@
   
   {% for an in android %}
 
-  <a href="{% url 'product-detail' an.id %}" class="btn"><div class="item"><img src="{{an.product_img.url}}" alt="" height="200px"><span class="fw-bold">{{an.title}}</span><br><span class="fs-5">Rs.{{an.s_price}}</span></div></a>
+  <div class="card">
+  <a href="{% url 'product-detail' an.id %}" class="btn">
+    <div class="item">
+      <img src="{{an.product_img.url}}" alt="" height="200px">
+      <span class="fw-bold">{{an.title}}</span>
+      <br><span class="fs-5">Rs.{{an.s_price}}</span>
+      
+    </div>
+  </a>
+ 
+
+  </div>
+
 
   {% endfor %}
     
