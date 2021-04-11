@@ -220,5 +220,33 @@ $('.adelbtn').click(function(){
 
 })
 
+$('#nmallphones').click(function(){
+
+    $('.cats').hide()
+    $('#allphones').show()
+    
+
+})
+
+
+$('#nmXiaomi').click(function(){
+    console.log("working")
+    $('.cats').hide()
+    $('#Xiaomi').show()
+    
+
+    
+
+})
+
+
+$('#nmRealme').click(function(){
+    console.log("working")
+    $('.cats').hide()
+    $('#Realme').show()
+    
+
+})
+
 
 

@@ -44,6 +44,9 @@ urlpatterns = [
 
     path('search/',views.SearchItem,name='search'),
 
+
+    path('androidcats/',views.androidphonecats,name='androidcat'),
+
     
 
 

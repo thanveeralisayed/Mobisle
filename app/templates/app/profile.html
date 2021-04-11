@@ -2,6 +2,10 @@
 {% load static %}
 {% block title %}Profile{% endblock title %}
 {% block main-content %}
+
+
+
+
 <div class="container my-5">
  <div class="row">
   <h3>Welcome {{request.user}}</h3>
@@ -134,33 +138,31 @@
  </div>
 </div>
 
-
 <script type="text/javascript">
 
-window.onload = function(){
+  window.onload = function(){
+  
+    console.log("working")
+  
+    $.ajax({
+      type:"GET",
+      url:"/checkdef",
+      success:function(data){
+              console.log(data)
+              $(".setdefad").show()
+              $("#nm"+data.defaultid).hide()
+              
+          }
+  
+    })
+  
+  }
+  
+  
+  </script>
 
-  console.log("working")
-
-  $.ajax({
-    type:"GET",
-    url:"/checkdef",
-    success:function(data){
-            console.log(data)
-            $(".setdefad").show()
-            $("#nm"+data.defaultid).hide()
-            
-        }
-
-  })
-
-}
 
 
-
-
-
-
-</script>
 
 
 {% endblock main-content %}

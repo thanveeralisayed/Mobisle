@@ -1,0 +1,196 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Buy Now{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+    <div class="row">
+
+
+        <div class="col-sm-3">
+
+
+            <h4 class="text-secondary">Brands</h4>
+            
+            <div class="list-group">
+                <a id="nmallphones" class="list-group-item list-group-item-action" href="#">All Mobiles</a>
+            </div>
+
+            
+     
+            {% for name in brands %}
+                
+
+            <a id="nm{{name}}" class="list-group-item list-group-item-action" href="#">{{name}}</a>
+            
+
+
+            {% endfor %}
+
+            <h4 class="text-secondary">Ram</h4>
+
+            {% for size in memory %}
+                
+
+            <a class="list-group-item list-group-item-action" href="#">{{size}}GB</a>
+            
+
+
+            {% endfor %}
+
+
+            <h4 class="text-secondary">Internal Memory</h4>
+
+            {% for tot in internal %}
+                
+
+            <a class="list-group-item list-group-item-action" href="#">{{tot}}GB</a>
+            
+
+
+            {% endfor %}
+
+
+            <h4 class="text-secondary">Price</h4>
+
+           
+                
+
+            <a class="list-group-item list-group-item-action" href="#">Above 10000</a>
+            <a class="list-group-item list-group-item-action" href="#}">Below 10000</a>
+
+            
+
+
+                
+            
+
+        </div>
+
+    <div class="col-sm-8 offset-sm-1">
+
+
+
+
+
+        
+        
+            
+        <div id="allphones" class="row cats">
+            
+            
+            {% for item in mobiles %}
+
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" height="150px" src="{{item.product_img.url}}" alt="" >
+
+                    <div class="card-body">
+                        <a class="card-title" href="#">{{item.title}}</a>
+                        <p class="card-text">{{item.d_price}}</p>
+                    </div>
+
+                </div>
+            </div>
+
+                
+            {% endfor %}
+
+
+        </div>
+
+
+        <div id="Xiaomi" class="row cats">
+            
+            
+            {% for item in xiaomi %}
+
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" height="150px" src="{{item.product_img.url}}" alt="" >
+
+                    <div class="card-body">
+                        <a class="card-title" href="#">{{item.title}}</a>
+                        <p class="card-text">{{item.d_price}}</p>
+                    </div>
+
+                </div>
+            </div>
+
+                
+            {% endfor %}
+
+
+        </div>
+
+        <div id="Realme" class="row cats">
+            
+            
+            {% for item in realme %}
+
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" height="150px" src="{{item.product_img.url}}" alt="" >
+
+                    <div class="card-body">
+                        <a class="card-title" href="#">{{item.title}}</a>
+                        <p class="card-text">{{item.d_price}}</p>
+                    </div>
+
+                </div>
+            </div>
+
+                
+            {% endfor %}
+
+
+        </div>
+
+
+       
+
+
+        
+        
+
+
+        <!-- <div class="row">
+            
+            
+            {% for item in searcheditems %}
+
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" height="150px" src="{{item.product_img.url}}" alt="" >
+
+                    <div class="card-body">
+                        <a class="card-title" href="#">{{item.title}}</a>
+                        <p class="card-text">{{item.d_price}}</p>
+                    </div>
+
+                </div>
+            </div>
+
+                
+            {% endfor %}
+
+
+        </div> -->
+         
+        
+    </div>    
+</div>
+
+
+<script type="text/javascript">
+
+    window.onload = function(){
+
+    $('.cats').hide()
+    $('#allphones').show()
+
+    }
+
+</script>
+  
+
+{% endblock main-content %}

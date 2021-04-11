@@ -499,5 +499,29 @@ def adeljs(request):
 
     return JsonResponse(data)    
 
+
+
+def androidphonecats(request):
+    user = request.user
+    num = None
+    if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=user)
+            num = cart.count()
+
+    
+    brands = Product.objects.values_list('brand', flat=True).filter(category='a').distinct()
+    memory = Product.objects.values_list('ram', flat=True).filter(category='a').distinct
+    internal = Product.objects.values_list('rom', flat=True).filter(category='a').distinct
+
+    
+    mobiles = Product.objects.filter(category='a')
+    xiaomiph = Product.objects.filter(category='a').filter(brand='Xiaomi')
+    realmeph = Product.objects.filter(category='a').filter(brand='Realme')
+            
+   
+    
+    return render(request, 'app/androidcats.html',{'mobiles':mobiles ,'xiaomi':xiaomiph,'realme':realmeph,'brands':brands, 'memory':memory, 'internal':internal,'num':num})
+
+
                 
 
