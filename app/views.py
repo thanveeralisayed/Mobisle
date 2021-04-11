@@ -501,7 +501,7 @@ def adeljs(request):
 
 
 
-def androidphonecats(request):
+def androidphone(request):
     user = request.user
     num = None
     if request.user.is_authenticated:
@@ -515,13 +515,45 @@ def androidphonecats(request):
 
     
     mobiles = Product.objects.filter(category='a')
-    xiaomiph = Product.objects.filter(category='a').filter(brand='Xiaomi')
-    realmeph = Product.objects.filter(category='a').filter(brand='Realme')
-            
-   
     
-    return render(request, 'app/androidcats.html',{'mobiles':mobiles ,'xiaomi':xiaomiph,'realme':realmeph,'brands':brands, 'memory':memory, 'internal':internal,'num':num})
+    
+    return render(request, 'app/androidcats.html',{'mobiles':mobiles, 'brands':brands, 'memory':memory, 'internal':internal,'num':num})
 
 
-                
+def androidphonecats(request):
+    if request.method == "GET":
+        data = request.GET['data']
+        brands = Product.objects.values_list('brand', flat=True).filter(category='a').distinct()
+        memory = Product.objects.values_list('ram', flat=True).filter(category='a').distinct
+        internal = Product.objects.values_list('rom', flat=True).filter(category='a').distinct
 
+
+        if data == 'allmobs':
+            mobiles = Product.objects.filter(category='a')
+
+        elif data in brands:  
+            mobiles = Product.objects.filter(category='a').filter(brand=data)
+
+        elif data in str(memory):
+            mobiles = Product.objects.filter(category='a').filter(ram=data)  
+
+        elif data in str(internal):
+            mobiles = Product.objects.filter(category='a').filter(rom=data)  
+
+        elif data in 'aten':
+            mobiles = Product.objects.filter(category='a').filter(d_price__lt=9999)
+
+        elif data in 'bten':
+            mobiles = Product.objects.filter(category='a').filter(d_price__gt=9999)    
+    
+
+    return render(None,'app/catsub.html',{'mobiles':mobiles})    
+
+    
+
+        
+
+
+
+
+   

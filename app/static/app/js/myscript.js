@@ -220,33 +220,31 @@ $('.adelbtn').click(function(){
 
 })
 
-$('#nmallphones').click(function(){
 
-    $('.cats').hide()
-    $('#allphones').show()
+
+$('.categoryfil').click(function(){
     
+    var name = $(this).attr("pid").toString();
+    console.log(name)
+
+    $.ajax({
+        type:"GET",
+        url:"/androidcats",
+        data:{
+            data:name
+        },
+
+        success:function(data){
+            $('#phones').html(data)
+        }
+
+
+    })
+
+
 
 })
 
-
-$('#nmXiaomi').click(function(){
-    console.log("working")
-    $('.cats').hide()
-    $('#Xiaomi').show()
-    
-
-    
-
-})
-
-
-$('#nmRealme').click(function(){
-    console.log("working")
-    $('.cats').hide()
-    $('#Realme').show()
-    
-
-})
 
 
 

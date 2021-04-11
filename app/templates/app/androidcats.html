@@ -12,7 +12,7 @@
             <h4 class="text-secondary">Brands</h4>
             
             <div class="list-group">
-                <a id="nmallphones" class="list-group-item list-group-item-action" href="#">All Mobiles</a>
+                <a id="nmallphones" pid="allmobs" class="list-group-item list-group-item-action categoryfil" href="#">All Mobiles</a>
             </div>
 
             
@@ -20,7 +20,7 @@
             {% for name in brands %}
                 
 
-            <a id="nm{{name}}" class="list-group-item list-group-item-action" href="#">{{name}}</a>
+            <a id="nm{{name}}" pid="{{name}}"  class="list-group-item list-group-item-action categoryfil" href="#">{{name}}</a>
             
 
 
@@ -31,7 +31,7 @@
             {% for size in memory %}
                 
 
-            <a class="list-group-item list-group-item-action" href="#">{{size}}GB</a>
+            <a pid="{{size}}" class="list-group-item list-group-item-action categoryfil" href="#">{{size}}GB</a>
             
 
 
@@ -43,7 +43,7 @@
             {% for tot in internal %}
                 
 
-            <a class="list-group-item list-group-item-action" href="#">{{tot}}GB</a>
+            <a pid="{{tot}}" class="list-group-item list-group-item-action categoryfil" href="#">{{tot}}GB</a>
             
 
 
@@ -55,8 +55,8 @@
            
                 
 
-            <a class="list-group-item list-group-item-action" href="#">Above 10000</a>
-            <a class="list-group-item list-group-item-action" href="#}">Below 10000</a>
+            <a pid="aten" class="list-group-item list-group-item-action categoryfil" href="#">Above 10000</a>
+            <a pid="bten" class="list-group-item list-group-item-action categoryfil" href="#}">Below 10000</a>
 
             
 
@@ -75,7 +75,7 @@
         
         
             
-        <div id="allphones" class="row cats">
+        <div id="phones" class="row cats">
             
             
             {% for item in mobiles %}
@@ -99,51 +99,9 @@
         </div>
 
 
-        <div id="Xiaomi" class="row cats">
-            
-            
-            {% for item in xiaomi %}
-
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" height="150px" src="{{item.product_img.url}}" alt="" >
-
-                    <div class="card-body">
-                        <a class="card-title" href="#">{{item.title}}</a>
-                        <p class="card-text">{{item.d_price}}</p>
-                    </div>
-
-                </div>
-            </div>
-
-                
-            {% endfor %}
 
 
-        </div>
-
-        <div id="Realme" class="row cats">
-            
-            
-            {% for item in realme %}
-
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" height="150px" src="{{item.product_img.url}}" alt="" >
-
-                    <div class="card-body">
-                        <a class="card-title" href="#">{{item.title}}</a>
-                        <p class="card-text">{{item.d_price}}</p>
-                    </div>
-
-                </div>
-            </div>
-
-                
-            {% endfor %}
-
-
-        </div>
+        
 
 
        
@@ -181,16 +139,6 @@
 </div>
 
 
-<script type="text/javascript">
-
-    window.onload = function(){
-
-    $('.cats').hide()
-    $('#allphones').show()
-
-    }
-
-</script>
   
 
 {% endblock main-content %}
