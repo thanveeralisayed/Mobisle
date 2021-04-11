@@ -30,6 +30,8 @@ urlpatterns = [
     path('address/', views.AddressView, name='address'),
     path('address/<slug:data>', views.AddressView, name='adelete'),
     path('saddress/<slug:data>', views.SetAddressDefault, name='adefault'),
+    path('setdefadd/',views.setdefadjs),
+    path('checkdef/',views.chkdefaultad),
 
 
     path('orders/', views.orders, name='orders'),

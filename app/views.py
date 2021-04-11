@@ -458,7 +458,35 @@ def SetAddressDefault(request,data):
     Customer.objects.filter(id=data).update(adefault='Yes')
     
      
-    return redirect('address')        
+    return redirect('address')
+
+
+def setdefadjs(request):
+    success = "set as default"
+    if request.method == 'GET':
+        prod_id = request.GET['prod_id']
+        print(prod_id)
+        Customer.objects.filter(user=request.user).update(adefault='No')
+        Customer.objects.filter(id=prod_id).update(adefault='Yes')  
+
+    data = {
+        'setdefres':success,
+    }
+
+    return JsonResponse(data)
+
+
+def chkdefaultad(request):
+    if request.method == 'GET':
+        prod = Customer.objects.filter(user=request.user).get(adefault='Yes')
+        prod_id = prod.id
+        
+    data = {
+        'defaultid':prod_id
+    }
+
+    return JsonResponse(data)
+
     
         
 

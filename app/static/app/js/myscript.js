@@ -170,13 +170,30 @@ $('.rmcart').click(function(){
 
 
     })
+})
 
-    
+
+$('.setdefad').click(function(){
+    console.log("working")
+    var id = $(this).attr("pid").toString();
+    console.log(id + " in js")
+
+    $.ajax({
+        type:"GET",
+        url:"/setdefadd",
+        data:{
+            prod_id:id
+        },
+
+        success:function(data){
+            console.log(data)
+            $(".setdefad").show()
+            $("#nm"+id).hide()
+            
+        }
 
 
-    
-
-    
+    })
 
 })
 
