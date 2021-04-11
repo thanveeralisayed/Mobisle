@@ -198,4 +198,27 @@ $('.setdefad').click(function(){
 })
 
 
+$('.adelbtn').click(function(){
+    var id = $(this).attr("pid").toString();
+    console.log(id);
+    var eml = this
+
+    $.ajax({
+        type:"GET",
+        url:"/deladd",
+        data:{
+            prod_id:id
+        },
+
+        success:function(data){
+            console.log(data)
+            eml.parentNode.parentNode.parentNode.remove()            
+
+        }
+
+    })
+
+})
+
+
 

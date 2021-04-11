@@ -487,7 +487,17 @@ def chkdefaultad(request):
 
     return JsonResponse(data)
 
-    
-        
+def adeljs(request):
+    if request.method == 'GET':
+        prod_id = request.GET['prod_id']
+        deladd = Customer.objects.get(id=prod_id)
+        Customer.delete(deladd)
 
+    data = {
+        'success':prod_id
+    }
+
+    return JsonResponse(data)    
+
+                
 
