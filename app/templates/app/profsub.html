@@ -1,17 +1,8 @@
-{% extends 'app/base.html' %}
 {% load static %}
-{% block title %}Profile{% endblock title %}
-{% block main-content %}
+<script src="{% static 'app/js/myscript.js' %}"></script>
 
 
-
-
-<div class="container my-5">
- <div id="profileitems" class="row">
-
-
-
-  <h3>Welcome {{request.user}}</h3>
+<h3>Welcome {{request.user}}</h3>
   <div class="col-sm-2 border-end">
    <ul class="list-unstyled">
 
@@ -81,42 +72,3 @@
 
 
   </div>
-
-
-
-
- </div>
-</div>
-
-<!-- <script type="text/javascript">
-
-  // window.onload = function(){
-  
-  //   console.log("working")
-  
-  //   $.ajax({
-  //     type:"GET",
-  //     url:"/checkdef",
-  //     success:function(data){
-  //             console.log("from the profile")
-  //             $(".setdefad").show()
-  //             $("#nm"+data.defaultid).hide()
-              
-  //         }
-  
-  //   })
-  
-  // }
-
-
-
-
-
-  
-  </script> -->
-
-
-
-
-
-{% endblock main-content %}

@@ -18,8 +18,11 @@
   </div>
   <div class="col-sm-4 offset-sm-1">
     <h4>Select Shipping Address</h4>
-    <hr>
+    <hr>  
     <form action="">
+
+      {% for add in address %}
+      
       <div class="card">
         <div class="card-body">
         <h5>Sonam Kumari</h5>
@@ -34,6 +37,9 @@
         <div class="text-end">
           <button type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Continue</button>
         </div>
+
+        {% endfor %}
+
       </form>
     </div>
   </div>

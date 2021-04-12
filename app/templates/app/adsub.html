@@ -1,0 +1,89 @@
+{% load static %}
+<script src="{% static 'app/js/myscript.js' %}"></script>
+
+
+<h3>Welcome {{request.user}}</h3>
+
+  <div class="col-sm-2 border-end">
+   <ul class="list-unstyled">
+
+    
+    
+    
+    <li class="d-grid">
+        <a id="profbtn" href="{% url 'profile' %}" class="btn ">Profile</a>
+    </li>
+      <li class="d-grid">
+        <a id="addbtn"  href="#" class="btn btn-primary">Address</a>
+    </li>
+  
+
+
+
+
+   </ul>
+  </div>
+
+
+
+  <div class="col-sm-9 offset-sm-1">
+
+  {% for ad in address %}
+      
+  <div class="col-sm-6">
+  <div class="card">
+  <div class="card-body">
+
+    <div class="card-title">
+      
+      
+    </div>
+
+
+<h3>Address {{forloop.counter}}</h3>
+<p>Name     - {{ad.name}}</p>   
+<p>Landmark - {{ad.landmark}}</p> 
+<p>Place    - {{ad.place}}</p>   
+<p>Zip      - {{ad.zipcode}}</p>   
+<p>State    - {{ad.state}}</p>   
+    
+
+    
+  
+  {% if ad.adefault == 'No' %}
+    
+  
+    
+
+  <a href="#" id="nm{{ad.id}}"  pid="{{ad.id}}" class="btn btn-success setdefad">Set As Default</a>
+
+
+  {% endif %}
+
+  
+
+ 
+
+<a class="btn btn-danger adelbtn" pid="{{ad.id}}" href="#">Delete</a>
+
+
+  
+   
+  </div>
+ </div>
+</div>
+
+
+
+{% endfor %}
+
+</div>
+
+
+
+
+
+
+
+
+

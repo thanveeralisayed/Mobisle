@@ -187,13 +187,26 @@ $('.setdefad').click(function(){
 
         success:function(data){
             console.log(data)
-            $(".setdefad").show()
-            $("#nm"+id).hide()
             
         }
 
 
     })
+
+
+    $.ajax({
+        type:"GET",
+        url:"/addprofile",
+        success:function(data){
+           $('#profileitems').html(data)
+        }
+
+    })
+
+
+
+
+
 
 })
 
@@ -315,5 +328,35 @@ $('.qcatfil').click(function(){
 
 
 })
+
+
+$('#addbtn').click(function(){
+    
+    console.log("working")
+    
+
+    $.ajax({
+        type:"GET",
+        url:"/addprofile",
+        success:function(data){
+           $('#profileitems').html(data)
+           
+        }
+
+    })
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
 
 

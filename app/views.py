@@ -412,7 +412,20 @@ class CustomerRegistrationView(View):
 
 
 def checkout(request):
- return render(request, 'app/checkout.html')
+    user = request.user
+    address = Customer.objects.filter(user=user)
+    cartitems = Cart.objects.filter(user=user)
+    amount = 0.0
+    shipping_amt = 70.0
+    total = 0.0
+
+
+    for item in cartitems:
+        amount = amount + (item.product.d_price * item.quantity)
+    
+    total = amount + shipping_amt
+
+    return render(request, 'app/checkout.html',{'address':address,'cartitems':cartitems,'total':total})
 
 
 class ProfileView(View):
@@ -582,4 +595,16 @@ def qwertycats(request):
         elif data in brands:
             mobiles = Product.objects.filter(category='q').filter(brand=data)   
 
-    return render(None,'app/catsub.html',{'mobiles':mobiles})                   
+    return render(None,'app/catsub.html',{'mobiles':mobiles})    
+
+
+
+def addprofilejs(request):
+    if request.method == "GET":
+        address = Customer.objects.filter(user=request.user)
+    
+    return render(None,'app/adsub.html',{'address':address}) 
+
+
+
+   

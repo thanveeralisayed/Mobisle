@@ -51,6 +51,9 @@ urlpatterns = [
     path('kcats/',views.keypadcats),
     path('qcats/',views.qwertycats),
 
+    path('addprofile/',views.addprofilejs),
+
+
     
 
 
