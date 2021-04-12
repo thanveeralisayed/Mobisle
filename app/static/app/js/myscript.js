@@ -245,6 +245,75 @@ $('.categoryfil').click(function(){
 
 })
 
+$('.icatfil').click(function(){
+    
+    var name = $(this).attr("pid").toString();
+    console.log(name)
 
+    $.ajax({
+        type:"GET",
+        url:"/icats",
+        data:{
+            data:name
+        },
+
+        success:function(data){
+            $('#phones').html(data)
+        }
+
+
+    })
+
+
+
+})
+
+
+$('.kcatfil').click(function(){
+    
+    var name = $(this).attr("pid").toString();
+    console.log(name)
+
+    $.ajax({
+        type:"GET",
+        url:"/kcats",
+        data:{
+            data:name
+        },
+
+        success:function(data){
+            $('#phones').html(data)
+        }
+
+
+    })
+
+
+
+})
+
+
+$('.qcatfil').click(function(){
+    
+    var name = $(this).attr("pid").toString();
+    console.log(name)
+
+    $.ajax({
+        type:"GET",
+        url:"/qcats",
+        data:{
+            data:name
+        },
+
+        success:function(data){
+            $('#phones').html(data)
+        }
+
+
+    })
+
+
+
+})
 
 

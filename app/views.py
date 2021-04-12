@@ -50,8 +50,16 @@ class ProductDetailView(View):
     def get(self,request,pk):
         num = None
         present = ''
+        ramtype=''
         user = request.user
         prod = Product.objects.get(id=pk)
+
+        if prod.category == 'q' or prod.category == 'k':
+            ramtype = 'MB'
+
+        elif prod.category == 'i' or prod.category == 'a':
+            ramtype = 'GB'    
+
         if request.user.is_authenticated:
             cart = Cart.objects.filter(user=user)
             num = cart.count()
@@ -70,7 +78,7 @@ class ProductDetailView(View):
         
 
 
-        return render(request, 'app/productdetail.html',{'prod':prod,'present':present,'num':num})
+        return render(request, 'app/productdetail.html',{'prod':prod,'present':present,'num':num,'ramtype':ramtype})
 
 
 
@@ -501,23 +509,6 @@ def adeljs(request):
 
 
 
-def androidphone(request):
-    user = request.user
-    num = None
-    if request.user.is_authenticated:
-            cart = Cart.objects.filter(user=user)
-            num = cart.count()
-
-    
-    brands = Product.objects.values_list('brand', flat=True).filter(category='a').distinct()
-    memory = Product.objects.values_list('ram', flat=True).filter(category='a').distinct
-    internal = Product.objects.values_list('rom', flat=True).filter(category='a').distinct
-
-    
-    mobiles = Product.objects.filter(category='a')
-    
-    
-    return render(request, 'app/androidcats.html',{'mobiles':mobiles, 'brands':brands, 'memory':memory, 'internal':internal,'num':num})
 
 
 def androidphonecats(request):
@@ -527,6 +518,7 @@ def androidphonecats(request):
         memory = Product.objects.values_list('ram', flat=True).filter(category='a').distinct
         internal = Product.objects.values_list('rom', flat=True).filter(category='a').distinct
 
+        
 
         if data == 'allmobs':
             mobiles = Product.objects.filter(category='a')
@@ -547,13 +539,47 @@ def androidphonecats(request):
             mobiles = Product.objects.filter(category='a').filter(d_price__gt=9999)    
     
 
-    return render(None,'app/catsub.html',{'mobiles':mobiles})    
-
-    
-
-        
+    return render(None,'app/catsub.html',{'mobiles':mobiles})  
 
 
+def iphonecats(request):
+    if request.method == "GET":
+        data = request.GET['data']
+        internal = Product.objects.values_list('rom', flat=True).filter(category='i').distinct
+
+        if data == "allmobs":
+             mobiles = Product.objects.filter(category='i')  
+
+        elif data in str(internal):
+             mobiles = Product.objects.filter(category='i').filter(rom=data)
+
+    return render(None,'app/catsub.html',{'mobiles':mobiles})   
 
 
-   
+def keypadcats(request):
+    if request.method == "GET":
+        data = request.GET['data']
+        brands = Product.objects.values_list('brand', flat=True).filter(category='k').distinct()
+
+        if data == "allmobs":
+             mobiles = Product.objects.filter(category='k')  
+
+        elif data in brands:
+             mobiles = Product.objects.filter(category='k').filter(brand=data)   
+
+    return render(None,'app/catsub.html',{'mobiles':mobiles}) 
+
+
+def qwertycats(request):
+    if request.method == "GET":
+        data = request.GET['data']
+        print(data)
+        brands = Product.objects.values_list('brand', flat=True).filter(category='q').distinct()
+
+        if data == "allmobs":
+            mobiles = Product.objects.filter(category='q')  
+
+        elif data in brands:
+            mobiles = Product.objects.filter(category='q').filter(brand=data)   
+
+    return render(None,'app/catsub.html',{'mobiles':mobiles})                   

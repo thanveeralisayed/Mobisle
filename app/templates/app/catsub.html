@@ -5,7 +5,7 @@
         <img class="card-img-top" height="150px" src="{{item.product_img.url}}" alt="" >
 
         <div class="card-body">
-            <a class="card-title" href="#">{{item.title}}</a>
+            <a class="card-title" href="{% url 'product-detail' item.id %}">{{item.title}}</a>
             <p class="card-text">{{item.d_price}}</p>
         </div>
 

@@ -23,7 +23,7 @@
             <h4 class="text-secondary">Brands</h4>
             
             <div class="list-group">
-                <a class="list-group-item list-group-item-action" href="{% url 'aphones' %}">All Mobiles</a>
+                <a pid="allmobs" class="list-group-item list-group-item-action categoryfil" href="#">All Mobiles</a>
             </div>
 
             
@@ -31,7 +31,7 @@
             {% for name in brands %}
                 
 
-            <a class="list-group-item list-group-item-action" href="{% url 'aphonesdata' name %}">{{name}}</a>
+            <a pid="{{name}}" class="list-group-item list-group-item-action categoryfil" href="#">{{name}}</a>
             
 
 
@@ -42,7 +42,7 @@
             {% for size in memory %}
                 
 
-            <a class="list-group-item list-group-item-action" href="{% url 'aphonesdata' size %}">{{size}}GB</a>
+            <a pid="{{size}}" class="list-group-item list-group-item-action categoryfil" href="#">{{size}}GB</a>
             
 
 
@@ -54,7 +54,7 @@
             {% for tot in internal %}
                 
 
-            <a class="list-group-item list-group-item-action" href="{% url 'aphonesdata' tot %}">{{tot}}GB</a>
+            <a pid="{{tot}}" class="list-group-item list-group-item-action categoryfil" href="#">{{tot}}GB</a>
             
 
 
@@ -66,8 +66,8 @@
            
                 
 
-            <a class="list-group-item list-group-item-action" href="{% url 'aphonesdata' 'Above' %}">Above 10000</a>
-            <a class="list-group-item list-group-item-action" href="{% url 'aphonesdata' 'Below' %}">Below 10000</a>
+            <a pid="aten" class="list-group-item list-group-item-action categoryfil" href="#">Above 10000</a>
+            <a pid="bten" class="list-group-item list-group-item-action categoryfil" href="#">Below 10000</a>
 
             
 
@@ -85,13 +85,13 @@
             <h4 class="text-secondary">Internal Memory</h4>
 
             <div class="list-group">
-                <a class="list-group-item list-group-item-action" href="{% url 'iphones' %}">All</a>
+                <a pid="allmobs" class="list-group-item list-group-item-action icatfil" href="#">All</a>
             </div>
 
             {% for tot in internal %}
                 
 
-            <a class="list-group-item list-group-item-action" href="{% url 'iphonesdata' tot %}">{{tot}}GB</a>
+            <a pid="{{tot}}" class="list-group-item list-group-item-action icatfil" href="#">{{tot}}GB</a>
             
 
 
@@ -107,7 +107,7 @@
             <h4 class="text-secondary">Brands</h4>
             
             <div class="list-group">
-                <a class="list-group-item list-group-item-action" href="{% url 'qphones' %}">All Mobiles</a>
+                <a pid="allmobs" class="list-group-item list-group-item-action qcatfil" href="#">All Mobiles</a>
             </div>
 
             
@@ -115,7 +115,7 @@
             {% for name in brands %}
                 
 
-            <a class="list-group-item list-group-item-action" href="{% url 'qphonesdata' name %}">{{name}}</a>
+            <a pid="{{name}}" class="list-group-item list-group-item-action qcatfil" href="#">{{name}}</a>
             
 
 
@@ -130,7 +130,7 @@
             <h4 class="text-secondary">Brands</h4>
             
             <div class="list-group">
-                <a class="list-group-item list-group-item-action" href="{% url 'kphones' %}">All Mobiles</a>
+                <a pid="allmobs" class="list-group-item list-group-item-action kcatfil" href="#">All Mobiles</a>
             </div>
 
             
@@ -138,7 +138,7 @@
             {% for name in brands %}
                 
 
-            <a class="list-group-item list-group-item-action" href="{% url 'kphonesdata' name %}">{{name}}</a>
+            <a pid="{{name}}" class="list-group-item list-group-item-action kcatfil" href="#">{{name}}</a>
             
 
 
@@ -163,7 +163,7 @@
         
         
             
-        <div class="row">
+        <div id="phones" class="row">
             
             
             {% for item in mobiles %}
