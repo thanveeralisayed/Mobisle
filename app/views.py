@@ -33,7 +33,7 @@ def SearchItem(request):
     item = Product.objects.filter(title__icontains=item_name)
     itemser = item_name
     if request.user.is_authenticated:
-        cart = Cart.objects.filter(user=user)
+        cart = Cart.objects.filter(user=request.user)
         num = cart.count()
     return render(request,'app/aphones.html',{'searcheditems':item,'itemser':itemser,'num':num})    
 
@@ -65,17 +65,9 @@ class ProductDetailView(View):
         if request.user.is_authenticated:
             cart = Cart.objects.filter(user=user)
             num = cart.count()
-            present = ''
-            for item in cart:
-                print(item.product.id)
-                if prod.id == item.product.id:
-                    present = 'Yes'
-                    print(present)
-                    if present == 'Yes':
-                        break
-                else:
-                    present = ''
-                    print(present)
+            present = False
+            present = Cart.objects.filter(Q(product=prod.id) & Q(user = request.user)).exists()
+            
 
         
 
@@ -88,8 +80,12 @@ def add_to_cart(request):
     if request.method == "GET":
         prod_id = request.GET['prod_id']
         user = request.user
+        already = False
         proditem = Product.objects.get(id=prod_id)
-        Cart(user=user,product=proditem).save()
+        already = Cart.objects.filter(Q(product=proditem.id) & Q(user = request.user)).exists()
+        if already == False:
+            Cart(user=user,product=proditem).save()
+        
         cart = Cart.objects.all().filter(user=request.user).count()
 
 
@@ -285,8 +281,9 @@ def buy_now(request):
 def orders(request):
     user = request.user
     orders = Order.objects.filter(user=user)
+    onum = Order.objects.filter(user=user).count()
 
-    return render(request, 'app/orders.html',{'orders':orders})
+    return render(request, 'app/orders.html',{'orders':orders,'onum':onum})
 
 def change_password(request):
  return render(request, 'app/changepassword.html')
@@ -626,6 +623,52 @@ def addprofilejs(request):
         address = Customer.objects.filter(user=request.user)
     
     return render(None,'app/adsub.html',{'address':address}) 
+
+
+def buynowjs(request):
+    fname = 'direct'
+    prod_id = request.GET.get('buybtn')
+    already = False
+    user = request.user
+    address = Customer.objects.filter(user=user)
+    proditem = Product.objects.get(id=prod_id)
+    total = proditem.d_price
+    already = Cart.objects.filter(Q(product=proditem.id) & Q(user = request.user)).exists()
+    if already == False:
+        Cart(user=request.user,product=proditem).save()
+
+    lasid = Cart.objects.filter(user=request.user).last()
+    lasid = lasid.id
+    cartitem = Cart.objects.filter(id=lasid)
+  
+
+    return render(request,'app/checkout.html',{'cartitems':cartitem,'address':address,'total':total,'fname':fname})
+
+
+
+def payment_direct(request):
+    user = request.user
+    cust_id = request.GET.get('ad_id')
+    customer = Customer.objects.get(id=cust_id)
+    cartid = Cart.objects.filter(user=user).last().id
+    cartitem = Cart.objects.filter(id=cartid)
+
+    
+
+    for item in cartitem:
+        Order(user=user,customer=customer,product=item.product,quantity=item.quantity).save()
+        item.delete()
+
+    return redirect("orders")    
+
+     
+
+
+
+
+
+    
+        
 
 
 

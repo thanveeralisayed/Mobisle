@@ -33,6 +33,10 @@ urlpatterns = [
     path('setdefadd/',views.setdefadjs),
     path('checkdef/',views.chkdefaultad),
     path('deladd/',views.adeljs),
+    path('buynow/',views.buynowjs,name='buy-now'),
+    path('paydirect/',views.payment_direct,name='pay-direct'),
+    
+
 
 
 

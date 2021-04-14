@@ -350,6 +350,9 @@ $('#addbtn').click(function(){
 
 
 
+
+
+
 // $('#adsubmitbtn').click(function(){
 
 //     $.ajax({

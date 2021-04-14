@@ -32,6 +32,54 @@
   <div class="col-sm-4 offset-sm-1">
     <h5>Default address can can be changed from your <a class="fw-bold" style="text-decoration: none;" href="{% url 'profile' %}">Profile</a></h5>
     <hr>  
+
+    
+    {% if fname == 'direct' %}
+
+
+    <form action="/paydirect">
+      {% csrf_token %}
+      {% for ad in address %}
+
+      
+      {% if ad.adefault == 'Yes' %}
+        
+      
+        
+      
+      <div class="card">
+        <div class="card-body">
+        <h5>{{ad.name}}</h5>
+        <input type="hidden" value="{{ad.id}}" id="ad_id" name="ad_id">
+        <p>Name     - {{ad.name}}</p>     
+        <p>Landmark - {{ad.landmark}}</p> 
+        <p>Place    - {{ad.place}}</p>   
+        <p>Zip      - {{ad.zipcode}}</p>   
+        <p>State    - {{ad.state}}</p>   
+
+        </div>
+      </div>
+        <div class="form-check mt-2 mb-5">
+          <input class="form-check-input" type="radio" value="">
+          <label class="form-check-label fw-bold" for="">
+            Default Address </label>
+        </div>
+        <div class="text-end">
+          <button type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Continue</button>
+        </div>
+        {% endif %}
+
+        {% endfor %}
+
+      </form>
+
+      
+   
+    
+    
+    {% else %}
+
+
     <form action="/paymentdone">
       {% csrf_token %}
 
@@ -68,6 +116,16 @@
         {% endfor %}
 
       </form>
+
+      {% endif %}
+
+
+
+
+
+
+
+
     </div>
   </div>
 </div>

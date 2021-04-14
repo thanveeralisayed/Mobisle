@@ -19,39 +19,30 @@
 
    <input type="hidden" pid="n" name="prod_id" value="{{prod.id}}" id="prod_id">
    
-   {% if present == '' %}
+   
        
-   {% if request.user.is_authenticated %}
+   {% if request.user.is_authenticated %}    
     
-        
-
-       <button type="submit" qid="n" pid="{{prod.id}}" id="addtocartbtn" class="btn btn-primary shadow px-5 py-2 mt-2 addcart">Add to cart</button>
-    
-    
-    
-    {% endif %}
-
-    {% endif %}
-
-    
-    {% if present == 'Yes' %}
+    {% if present %}
     <a id="addtocartbtn" qid="y" class="btn btn-secondary shadow px-5 py-2 mt-2">Added to Cart</a>
+    {% else %}
+    <button type="submit" qid="n" pid="{{prod.id}}" id="addtocartbtn" class="btn btn-primary shadow px-5 py-2 mt-2 addcart">Add to cart</button>
+    {% endif %}
     {% endif %}
         
 
 
-
+    <form action="/buynow">
     
-    {% if request.user.is_authenticated %}
+    <input type="hidden" value="{{prod.id}}" name="buybtn">
         
-   <a href="{% url 'buy-now' %}" class="btn btn-danger shadow px-5 py-2 mt-2">Buy Now</a>
+   <button class="btn btn-danger shadow px-5 py-2 mt-2" type="submit">Buy Now</button>
 
-   {% else %}
+    </form>
 
-   <a href="{% url 'login' %}" class="btn btn-danger shadow px-5 py-2 mt-2">Buy Now</a>
+  
 
-   {% endif %}
-
+   
 
    
 
