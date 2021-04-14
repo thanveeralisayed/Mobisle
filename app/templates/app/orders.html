@@ -4,16 +4,87 @@
 {% block main-content %}
 <div class="container my-5">
  <div class="row">
- <h3>Welcome Sonam</h3>
+ <h3>Your orders {{request.user}}</h3>
   <div class="col-sm-2 border-end">
    <ul class="list-unstyled">
     <li class="d-grid"><a href="{% url 'orders' %}" class="btn btn-primary">Orders</a></li>
    </ul>
   </div>
   <div class="col-sm-9 offset-sm-1">
-   <div class="row">
-    <div class="col-sm-6">Order 1</div>
-    <div class="col-sm-6">Order 2</div>
+
+    
+    {% for item in orders %}
+        
+   
+        
+    <div id="itemrow" class="row my-5">
+        <div class="col-sm-3 text-center align-self-center"><img src="{{ item.product.product_img.url }}" alt="" srcset="" class="img-fluid img-thumbnail shadow-sm" height="150" width="150"> </div>
+        <div class="col-sm-9">
+         <div>
+          <h5><a class="text-secondary fw-bold" style="text-decoration: none;" href="{% url 'product-detail' item.product.id  %}">{{item.product.title}}</a></h5>
+          <p class="mb-2 text-muted small">
+   
+           <li>{{item.product.soc}} Processor</li>
+           <!-- <li>{{item.product.ram}}GB RAM</li>  -->
+           <li>Quantity : {{item.quantity}} </li>
+
+           <p>Order Status : {{item.status}} </p>
+
+           
+           {% if item.status == 'Accepted' %}
+            
+           <div class="progress">
+               <div class="progress-bar" role="progressbar" style="width: 20%" area-valuenow="20" area-valuemin="0" area-valuemax="100">
+               </div>
+           </div>
+
+           {% endif %}
+
+           {% if item.status == 'Packed' %}
+            
+           <div class="progress">
+               <div class="progress-bar" role="progressbar" style="width: 40%" area-valuenow="40" area-valuemin="0" area-valuemax="100">
+               </div>
+           </div>
+
+           {% endif %}
+
+           {% if item.status == 'On The Way' %}
+            
+           <div class="progress">
+               <div class="progress-bar" role="progressbar" style="width: 70%" area-valuenow="70" area-valuemin="0" area-valuemax="100">
+               </div>
+           </div>
+
+           {% endif %}
+
+
+           {% if item.status == 'Delivered' %}
+            
+           <div class="progress">
+               <div class="progress-bar" role="progressbar" style="width: 100%" area-valuenow="100" area-valuemin="0" area-valuemax="100">
+               </div>
+           </div>
+
+           {% endif %}
+
+
+               
+   
+          </p>
+          <div class="my-3">
+           
+          <div class="d-flex justify-content-between">
+             <!-- <button class="btn btn-sm btn-secondary mr-3 rmcart" id="carmvebtn" type="reset" pid="{{item.id}}">Remove</button> -->
+           <p class="mb-0"><span><strong>{{item.total_cost}}</strong></span></p>
+          </div>
+         </div>
+        </div>
+       </div>
+
+
+    {% endfor %}
+    
    </div>
   </div>
  </div>

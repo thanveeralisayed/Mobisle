@@ -350,7 +350,19 @@ $('#addbtn').click(function(){
 
 
 
+// $('#adsubmitbtn').click(function(){
 
+//     $.ajax({
+//         type:"GET",
+//         url:"/addprofile",
+//         success:function(data){
+//            $('#profileitems').html(data)
+           
+//         }
+
+//     })
+
+// })
 
 
 

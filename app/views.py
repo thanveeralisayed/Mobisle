@@ -5,6 +5,8 @@ from .forms import CustomerRegistrationForm,CustomerProfileForm
 from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
 # def home(request):
@@ -191,6 +193,7 @@ def plus_cart(request):
 
         for item in cart:
             amount = amount + (item.product.d_price * item.quantity)
+            
 
         total = amount + shipping_amt
 
@@ -250,7 +253,7 @@ def minus_cart(request):
 
 
 
-
+@login_required
 def show_cart(request):
     if request.user.is_authenticated:
         user = request.user
@@ -268,7 +271,7 @@ def show_cart(request):
 
         return render(request, 'app/addtocart.html',{'carts':cart,'num':num,'amount':amount,'total':total})
 
-
+@login_required
 def buy_now(request):
  return render(request, 'app/buynow.html')
 
@@ -278,8 +281,12 @@ def buy_now(request):
 # def address(request):
 #  return render(request, 'app/profile.html',{'active':'btn-primary'})
 
+@login_required
 def orders(request):
- return render(request, 'app/orders.html')
+    user = request.user
+    orders = Order.objects.filter(user=user)
+
+    return render(request, 'app/orders.html',{'orders':orders})
 
 def change_password(request):
  return render(request, 'app/changepassword.html')
@@ -393,9 +400,9 @@ def kphones(request, data=None):
 #  return render(request, 'app/customerregistration.html')
 
 
+
 class CustomerRegistrationView(View):
 
-    
     def get(self, request):
         registration = 'yes'
         form = CustomerRegistrationForm
@@ -410,7 +417,7 @@ class CustomerRegistrationView(View):
         return render(request, 'app/reglogin.html',{'form':form,'reg':registration})
 
 
-
+@login_required
 def checkout(request):
     user = request.user
     address = Customer.objects.filter(user=user)
@@ -428,6 +435,21 @@ def checkout(request):
     return render(request, 'app/checkout.html',{'address':address,'cartitems':cartitems,'total':total})
 
 
+def payment_done(request):
+    user = request.user
+    cust_id = request.GET.get('ad_id')
+    customer = Customer.objects.get(id=cust_id)
+    cart = Cart.objects.filter(user=user)
+
+    for item in cart:
+        Order(user=user,customer=customer,product=item.product,quantity=item.quantity).save()
+        item.delete()
+
+    return redirect("orders")    
+
+
+
+@method_decorator(login_required,name='dispatch')
 class ProfileView(View):
     def get(self, request):
         user = request.user

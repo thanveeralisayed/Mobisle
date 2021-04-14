@@ -87,4 +87,7 @@ urlpatterns = [
 
 
     path('checkout/', views.checkout, name='checkout'),
+    path('paymentdone/', views.payment_done, name='payment-done'),
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
